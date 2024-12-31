@@ -6,5 +6,8 @@ class CityForm(ModelForm):
         model = City
         fields = ['name']
         widgets = {
-            'name': TextInput(attrs={'class' : 'input', 'placeholder' : 'City Name'}),
-        } #updates the input class to have the correct Bulma class and placeholder
+            'name': TextInput(attrs={
+                'class': 'border border-gray-300 rounded-lg py-2 px-4 w-full',  # Tailwind CSS classes
+                'placeholder': 'City Name'
+            }),
+        }
