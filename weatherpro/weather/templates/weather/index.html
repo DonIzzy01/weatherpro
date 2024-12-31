@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>What's the weather like?</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <section class="bg-blue-500">
+        <div class="py-6">
+            <div class="container mx-auto">
+                <h1 class="text-white text-3xl text-center">
+                    What's the weather like?
+                </h1>
+            </div>
+        </div>
+    </section>
+    <section class="py-8">
+        <div class="container mx-auto">
+            <div class="flex justify-center">
+                <div class="w-1/2">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="flex">
+                            <div class="flex-grow">
+                                <input class="border border-gray-300 rounded-l-lg py-2 px-4 w-full" type="text" name="city" placeholder="City Name" required>
+                            </div>
+                            <div>
+                                <button class="bg-blue-500 text-white rounded-r-lg py-2 px-4">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-8">
+        <div class="container mx-auto">
+            <div class="flex justify-center">
+                <div class="w-1/2">
+                    {% if weather %}
+                        {% if weather.error %}
+                            <p class="text-red-500 text-center">{{ weather.error }}</p>
+                        {% else %}
+                            <div class="bg-white shadow-md rounded-lg p-4">
+                                <article class="flex">
+                                    <div class="mr-4">
+                                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Weather Icon" class="w-12 h-12">
+                                    </div>
+                                    <div>
+                                        <div class="text-lg font-semibold">{{ weather.city }}</div>
+                                        <div class="text-gray-700">{{ weather.temperature }}° F</div>
+                                        <div class="text-gray-600">{{ weather.description }}</div>
+                                    </div>
+                                </article>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-gray-500 text-center">Please enter a city to get the weather information.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    </footer>
+</body>
+</html>
