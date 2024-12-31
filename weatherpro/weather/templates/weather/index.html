@@ -25,10 +25,10 @@
                         {% csrf_token %}
                         <div class="flex">
                             <div class="flex-grow">
-                                <input class="border border-gray-300 rounded-l-lg py-2 px-4 w-full" type="text" name="city" placeholder="City Name" required>
+                                {{ form.city }}  <!-- Render the city input field from the form -->
                             </div>
                             <div>
-                                <button class="bg-blue-500 text-white rounded-r-lg py-2 px-4">
+                                <button class="bg-blue-500 text-white rounded-lg py-2 px-4">
                                     Add City
                                 </button>
                             </div>
@@ -42,23 +42,25 @@
         <div class="container mx-auto">
             <div class="flex justify-center">
                 <div class="w-1/2">
-                    {% if weather %}
-                        {% if weather.error %}
-                            <p class="text-red-500 text-center">{{ weather.error }}</p>
-                        {% else %}
-                            <div class="bg-white shadow-md rounded-lg p-4">
-                                <article class="flex">
-                                    <div class="mr-4">
-                                        <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Weather Icon" class="w-12 h-12">
-                                    </div>
-                                    <div>
-                                        <div class="text-lg font-semibold">{{ weather.city }}</div>
-                                        <div class="text-gray-700">{{ weather.temperature }}° F</div>
-                                        <div class="text-gray-600">{{ weather.description }}</div>
-                                    </div>
-                                </article>
-                            </div>
-                        {% endif %}
+                    {% if weather_data %}
+                        {% for weather in weather_data %}
+                            {% if weather.error %}
+                                <p class="text-red-500 text-center">{{ weather.error }}</p>
+                            {% else %}
+                                <div class="bg-white shadow-md rounded-lg p-4 mb-4">
+                                    <article class="flex">
+                                        <div class="mr-4">
+                                            <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png" alt="Weather Icon" class="w-12 h-12">
+                                        </div>
+                                        <div>
+                                            <div class="text-lg font-semibold">{{ weather.city }}</div>
+                                            <div class="text-gray-700">{{ weather.temperature }}° F</div>
+                                            <div class="text-gray-600">{{ weather.description }}</div>
+                                        </div>
+                                    </article>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     {% else %}
                         <p class="text-gray-500 text-center">Please enter a city to get the weather information.</p>
                     {% endif %}
